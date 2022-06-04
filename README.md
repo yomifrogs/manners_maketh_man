@@ -1,16 +1,67 @@
 # manners_maketh_man
 
-Flutter Template Project
+## Overview
 
-## Getting Started
+- 今現在遠藤がまとめた、FlutterPJのアーキテクチャです
+- 実装サンプルなので全く動きません
+- Getとか使っているけど、今後は使わないようにしていく方針だったりします。
 
-This project is a starting point for a Flutter application.
+## ディレクトリ構成
 
-A few resources to get you started if this is your first Flutter project:
+- ロジックをまとめた/src/と、viewをまとめた/view/に大きく二分されます。
+- サーバやWebフロントの考え方を取り込み、基本構成はViewとControllerのみで構成する
+- Stateは画面間で共有せず、基本的にはページ遷移時にメモリやパラメータ上で渡す
+- 名称の数字は依存関係を表す
+    - 基本的に1 -> 2 -> 3の順に処理を呼び出す
+    - 依存関係は上記に依らない
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+### ロジック部
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+#### 1_usecase
+
+- Pageから呼び出される処理のエントリーポイントで、基本的にはpage:usecaseで一対にする
+    - 規模の小さいアプリであれば上記に依らなくてもいいと思う
+    - Page上の1Actionに対して、処理がひとつ書かれているイメージ
+        - なので、画面側で独自に宣言した型等を返しても良い
+- mock配下ではUseCaseのモックデータを返す処理を記載する
+    - infraで記述したDIコンテナにより、アプリ初期化時にMockingをすることで、アプリのサービスを使わなくても画面遷移やデザインが確認できる
+
+#### 2_domain
+
+- 一般的なドメインを記述する
+- usecaseやinfraに依らない処理にする
+- infraでの処理をまとめたい場合には、基本usecaseで呼び出すが、必要に応じてrepositoryを切っても良い
+
+#### 3_infra
+
+- 外部サービスの連携処理を記載する
+    - ドメインを参照することも可能だが、基本的にはinfra側にDTOを切っておくことで、変更容易性が担保される
+    - ドメインの変換ロジックもこちらに記載する、でよい
+- flutter独自の設定（localizationやlogger）も外部サービスとしてここに記載する
+- setup関数を用意し、view側で呼び出す
+- exceptionは基本的に外部サービス連携部で起こるものなので、exceptionをまとめておく
+    - ドメインに関わるエラーに関しては、基本的にはExceptionを投げない
+
+### View部
+
+#### 1_root
+
+- MaterialApp等、アプリの初期設定（テーマ設定など）をここに記載する
+- 環境変数読み込み処理や設定ファイル等もここで良い
+
+#### 2_page
+
+- ページごとの処理を記載する
+- ページの１Actionがサーバアーキのコントローラに相当するイメージなので、ここからUsecaseを呼びだす
+    - usecase呼び出しには共通のWrapperを使い、エラーハンドリング処理はここに記載する
+- ページ遷移処理のロジックも記載する
+    - ページ間での情報を渡すときには、こちらの引数に記載する
+
+#### 3_template
+
+- ドメインやStateを参照したWidgetを記述する
+- フッター等もここに記載する
+
+#### 4_component
+
+- どのロジックにも依存しないWidgetを記載する
