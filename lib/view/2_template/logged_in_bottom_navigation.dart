@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:manners_maketh_man/view/2_page/home_page.dart';
+import 'package:manners_maketh_man/view/1_page/home_page.dart';
 
 createLoggedInBottomNavigation({required int selectIndex}) =>
     BottomNavigationBar(
@@ -45,7 +45,7 @@ onPressedLoggedInBottomNavigationTapped(int selectIndex) {
       transitionHomePage();
       break;
     case customFormPageIndex:
-      transitionHomePage(formId);
+      transitionHomePage();
       break;
     default:
       break;
