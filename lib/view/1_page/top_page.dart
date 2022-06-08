@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:manners_maketh_man/view/1_page/home_page.dart';
+import 'package:manners_maketh_man/view/2_template/footer_navigation.dart';
 import 'package:manners_maketh_man/view/3_component/text_button.dart';
 
 class TopPage extends StatefulWidget {

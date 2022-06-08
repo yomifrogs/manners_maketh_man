@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:manners_maketh_man/src/1_usecase/template_usecase.dart';
 import 'package:manners_maketh_man/src/2_domain/user.dart';
+import 'package:manners_maketh_man/view/2_template/footer_navigation.dart';
 
 class MyHomePage extends StatefulWidget {
   static void transition(BuildContext context) {
@@ -56,6 +57,8 @@ class _MyHomePageState extends State<MyHomePage> {
         tooltip: 'Increment',
         child: const Icon(Icons.add),
       ),
+      bottomNavigationBar: createLoggedInBottomNavigation(
+          context: context, selectIndex: homePageIndex),
     );
   }
 }
