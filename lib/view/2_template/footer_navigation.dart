@@ -26,10 +26,10 @@ const sampleIndex = 1;
 onPressedLoggedInBottomNavigationTapped(BuildContext context, int selectIndex) {
   switch (selectIndex) {
     case homePageIndex:
-      MyHomePage.transition(context);
+      MyHomePage.transition(context, "from Footer Home");
       break;
     case sampleIndex:
-      MyHomePage.transition(context);
+      MyHomePage.transition(context, "from Footer Sample");
       break;
     default:
       break;

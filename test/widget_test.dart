@@ -14,7 +14,7 @@ import 'package:manners_maketh_man/view/1_page/home_page.dart';
 void main() {
   testWidgets('Counter increments smoke test', (WidgetTester tester) async {
     // Build our app and trigger a frame.
-    await tester.pumpWidget(const MyHomePage());
+    await tester.pumpWidget(const MyHomePage(title: "",));
 
     // Verify that our counter starts at 0.
     expect(find.text('0'), findsOneWidget);

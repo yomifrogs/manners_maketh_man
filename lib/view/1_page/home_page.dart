@@ -2,19 +2,22 @@ import 'package:flutter/material.dart';
 import 'package:manners_maketh_man/src/1_usecase/template_usecase.dart';
 import 'package:manners_maketh_man/src/2_domain/user.dart';
 import 'package:manners_maketh_man/view/2_template/footer_navigation.dart';
+import 'package:manners_maketh_man/view/3_component/back_button.dart';
 
 class MyHomePage extends StatefulWidget {
-  static void transition(BuildContext context) {
+  static void transition(BuildContext context, String title) {
     // 画面遷移
     Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (context) => const MyHomePage(),
+          builder: (context) => MyHomePage(
+            title: title,
+          ),
         ));
   }
 
-  const MyHomePage({Key? key}) : super(key: key);
-  final String title = "home";
+  const MyHomePage({Key? key, required this.title}) : super(key: key);
+  final String title;
 
   @override
   State<MyHomePage> createState() => _MyHomePageState();
@@ -37,6 +40,7 @@ class _MyHomePageState extends State<MyHomePage> {
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.title),
+        leading: createBackButton(context),
       ),
       body: Center(
         child: Column(
