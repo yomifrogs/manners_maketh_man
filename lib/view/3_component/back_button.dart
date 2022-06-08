@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-BackButton createBackButton() => BackButton(
+BackButton createBackButton(BuildContext context) => BackButton(
       onPressed: () {
-        // ヘッダ共通のバック処理
+        Navigator.pop(context);
       },
     );
